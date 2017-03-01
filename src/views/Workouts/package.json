@@ -1,0 +1,6 @@
+{
+  "name": "Workouts",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Workouts.js"
+}
