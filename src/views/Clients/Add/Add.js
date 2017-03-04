@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import { Link, browserHistory } from 'react-router';//browserHistory
+import { Link, hashHistory } from 'react-router';//browserHistory
 import { Form } from 'formsy-react';
 
 
 import FormInput from '../../../components/Input';
 import FormTextarea from '../../../components/Textarea';
 import FormSwitch from '../../../components/Switch';
+import FormSelect from '../../../components/Select';
 
 import AlertContainer from 'react-alert';
 
@@ -22,11 +23,11 @@ class Forms extends Component {
     };
 
     //var transitionTo = Router.transitionTo;
-    this.state = {canSubmit : false};
+    this.state = {canSubmit : false,countries : [{'key' : '1','title' : 'Country'}]};
 
   }
 
-  
+
   submit(data) {
     console.log(data);
     alert(JSON.stringify(data, null, 4));
@@ -35,8 +36,8 @@ class Forms extends Component {
       time: 3000,
     });
 
-     setTimeout(function() { 
-      browserHistory.push('/clients/list'); 
+     setTimeout(function() {
+      hashHistory.push('/clients');
     }, 3000);
 
   }
@@ -74,12 +75,14 @@ class Forms extends Component {
                                             <FormInput name="email" title="Email Address" placeholder="email@example.com" validations="isEmail" validationError="This is not a valid email" required autocomplete="off" />
                                             <FormInput name="phone" title="Phone Number" required validations={{isInt: true,isLength: 10}} validationErrors={{isInt : "You have not type valid phone number.", isLength : "Enter 10 digits mobile numbers."}}/>
 
-                                           
+
                                             <FormInput name="password" type="password" title="Password" placeholder=""  required  validations={{ minLength: 5, maxLength: 15}}  validationErrors={{minLength: 'Enter Password between 5-15 characters',maxLength: "Enter Password between 5-15 characters"}}  />
                                             <FormInput name="confirm_password" type="password" title="Confirm Password" placeholder="" validations="equalsField:password" required validationError="Password and confirm password do not match." />
-                                            
-                                            <FormInput name="address" title="Location" placeholder="" required />
+
+                                            <FormInput name="address" title="Address" placeholder="" required />
+                                            <FormInput name="city" title="City" placeholder="" required />
                                             <FormInput name="postal_code" title="Postal Code" placeholder="" required />
+                                            <FormSelect name="country" title="Country" placeholder="" required options={this.state.countries} />
                                             <FormTextarea name="about" title="About" placeholder=""  />
                                             <FormInput name="image" title="Profile Image" type="file" />
                                             <FormSwitch name="appointment_notification" title="Notification" value="1" />
@@ -90,9 +93,9 @@ class Forms extends Component {
                                                 <label className="col-md-3 form-control-label"></label>
                                                 <div className="col-md-9">
                                                     <button type="submit" className="btn btn-md btn-primary mr-1" disabled={!this.state.canSubmit}><i className="fa fa-dot-circle-o"></i> Submit</button>
-                                                    <Link to={'/clients/list'} className="btn btn-md btn-danger goBack"><i className="fa fa-ban"></i> Cancel </Link>
+                                                    <Link to={'/clients'} className="btn btn-md btn-danger goBack"><i className="fa fa-ban"></i> Cancel </Link>
                                                     <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
-        
+
                                                 </div>
                                             </div>
                                         </Form>

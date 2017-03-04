@@ -26,23 +26,18 @@ class Sidebar extends Component {
               <Link to={'/dashboard'} className="nav-link" activeClassName="active"><i className="icon-speedometer"></i> Dashboard </Link>
             </li>
             <li className="nav-item">
-              <Link to={'/clients/list'} className="nav-link" activeClassName="active"><i className="icon-user"></i> Client manager </Link>
+              <Link to={'/clients'} className="nav-link" activeClassName="active"><i className="icon-user"></i> Client manager </Link>
             </li>
             <li className="nav-item">
               <Link to={'/trainers'} className="nav-link" activeClassName="active"><i className="icon-people"></i> PT manager </Link>
             </li>
-            
+
             <li className="nav-item">
-              <Link to={'/workouts'} className="nav-link" activeClassName="active"><i className="icon-tag"></i> Work out manager </Link>
+              <Link to={'/workouts'} className="nav-link" activeClassName="active"><i className="icon-tag"></i> Session manager </Link>
             </li>
-            <li className="nav-item">
-              <Link to={'/schedules'} className="nav-link" activeClassName="active"><i className="icon-calendar"></i> Schedules manager </Link>
-            </li>
-            <li className="nav-item">
-              <Link to={'/goals'} className="nav-link" activeClassName="active"><i className="icon-target"></i> Goals manager </Link>
-            </li>
-            
-            <li className={this.activeRoute("/reports")}>
+
+
+            {/*<li className={this.activeRoute("/reports")}>
               <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick.bind(this)}><i className="icon-chart"></i> Reports</a>
               <ul className="nav-dropdown-items">
                 <li className="nav-item">
@@ -55,7 +50,7 @@ class Sidebar extends Component {
                   <Link to={'/reports/schedules'} className="nav-link" activeClassName="active"><i className="icon-calendar"></i> Schedules</Link>
                 </li>
               </ul>
-            </li>
+            </li> */ }
             <li className={this.activeRoute("/cms")}>
               <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick.bind(this)}><i className="icon-info"></i> CMS</a>
               <ul className="nav-dropdown-items">
@@ -63,16 +58,16 @@ class Sidebar extends Component {
                   <Link to={'/categories'} className="nav-link" activeClassName="active"><i className="icon-list"></i> Category manager </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to={'/cms/articles'} className="nav-link" activeClassName="active"><i className="icon-note"></i> Articles</Link>
+                  <Link to={'/article'} className="nav-link" activeClassName="active"><i className="icon-note"></i> Articles</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to={'/cms/about-us'} className="nav-link" activeClassName="active"><i className="icon-info"></i> About Us</Link>
+                  <Link to={'/pages/about-us'} className="nav-link" activeClassName="active"><i className="icon-info"></i> About Us</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to={'/cms/term-conditions'} className="nav-link" activeClassName="active"><i className="icon-info"></i> Terms & Conditions</Link>
+                  <Link to={'/pages/term-conditions'} className="nav-link" activeClassName="active"><i className="icon-info"></i> Terms & Conditions</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to={'/cms/privacy'} className="nav-link" activeClassName="active"><i className="icon-info"></i> Privacy Policy</Link>
+                  <Link to={'/pages/privacy'} className="nav-link" activeClassName="active"><i className="icon-info"></i> Privacy Policy</Link>
                 </li>
               </ul>
             </li>

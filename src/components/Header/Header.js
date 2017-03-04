@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Dropdown, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Link } from 'react-router';
 
 class Header extends Component {
 
@@ -58,18 +59,18 @@ class Header extends Component {
           </li>*/}
           <li className="nav-item">
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+
               <a onClick={this.toggle} className="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded={this.state.dropdownOpen}>
-                <img src={'/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com"/>
-                <span className="hidden-md-down">admin</span>
+                <span className="hidden-md-down">Welocme Admin</span>
               </a>
 
               <DropdownMenu className="dropdown-menu-right">
-                <DropdownItem header className="text-center"><strong>Settings</strong></DropdownItem>
+                  {/*<DropdownItem header className="text-center"><strong>Settings</strong></DropdownItem>
 
-                <DropdownItem><i className="fa fa-user"></i> Profile</DropdownItem>
+              <DropdownItem><i className="fa fa-user"></i> Profile</DropdownItem>
 
-                <DropdownItem><i className="fa fa-key"></i> Change Password</DropdownItem>
-                <DropdownItem><i className="fa fa-lock"></i> Logout</DropdownItem>
+                <DropdownItem><i className="fa fa-key"></i> Change Password</DropdownItem>*/}
+                <DropdownItem><Link to={'/pages/login'} className=""><i className="fa fa-lock"></i> Logout </Link></DropdownItem>
 
               </DropdownMenu>
             </Dropdown>

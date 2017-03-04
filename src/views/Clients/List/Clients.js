@@ -45,8 +45,8 @@ class Clients extends Component {
     }
 
     handleClientRemove( client ) {
-        if(confirm('Delete ? ')) {        
-            var index = -1;   
+        if(confirm('Delete ? ')) {
+            var index = -1;
             var clength = this.state.clientList.length;
             for( var i = 0; i < clength; i++ ) {
                 if( this.state.clientList[i].id === client.id ) {
@@ -54,7 +54,7 @@ class Clients extends Component {
                     break;
                 }
             }
-            this.state.clientList.splice( index, 1 );  
+            this.state.clientList.splice( index, 1 );
             this.setState( {clientList: this.state.clientList} );
 
             this.msg.show(client.name + ' has been deleted successfully', {
@@ -72,10 +72,52 @@ class Clients extends Component {
                     <div className="col-md-12">
                         <div className="card">
                             <div className="card-header">
-                                <strong>Client Manager</strong> 
+                                <strong>Client Manager</strong>
                                 <Link to={'/clients/add'} className="btn btn-primary btn-sm pull-right"><i className="fa fa-plus"></i> Add New Client </Link>
+                                <Link to={'/clients'} className="btn btn-primary btn-sm pull-right mr-1"><i className="fa fa-download"></i> Download XLS </Link>
                             </div>
                             <div className="card-block">
+                                <div className="form-group row">
+                                  <div className="col-3">
+                                    <input type="text" className="form-control" placeholder="Name, email and phone"/>
+                                  </div>
+                                  <div className="col-3">
+                                    <input type="text" className="form-control"  placeholder="City & Postal code"/>
+                                  </div>
+                                  <div className="col-3">
+                                    <select className="form-control">
+                                      <option>Country</option>
+                                    </select>
+                                  </div>
+                                  <div className="col-3">
+                                    <select className="form-control">
+                                      <option>Status</option>
+                                      <option>Active</option>
+                                      <option>Inactive</option>
+                                    </select>
+                                  </div>
+                                </div>
+
+                                <div className="form-group row">
+                                  <div className="col-3">
+                                    <select className="form-control">
+                                      <option>Category</option>
+                                      <option>Yogo</option>
+                                      <option>Cycling</option>
+                                    </select>
+                                  </div>
+
+                                  <div className="col-3">
+                                    <input type="text" className="form-control"  placeholder="Registered Date"/>
+                                  </div>
+
+                                  <div className="col-6">
+
+                                    <button className="btn btn-default btn-sm pull-right">Clear Filter </button>
+                                    <button className="btn btn-primary btn-sm pull-right  mr-1">Search </button>
+                                  </div>
+                                </div>
+
                                 <ClintList clist={this.state.clientList} onClientDelete={this.handleClientRemove.bind(this)} />
                             </div>
                         </div>
@@ -84,7 +126,7 @@ class Clients extends Component {
                 </div>
             </div>
         )
-    }   
+    }
 }
 
 var ClintList = React.createClass({
@@ -93,11 +135,11 @@ var ClintList = React.createClass({
     },
     render: function() {
       var companies = [];
-          var that = this; 
+          var that = this;
           this.props.clist.forEach(function(client, key) {
             companies.push(<Client client={client} onClientDelete={that.handleClientRemove}  key={key}/> );
         });
-          return ( 
+          return (
             <table className="table table-hover table-outline mb-0 hidden-sm-down">
                 <thead className="thead-default">
                     <tr>
@@ -155,7 +197,7 @@ var Client = React.createClass({
             </td>
             <td>
                 <div className="text-center">
-                    <Link to={'/clients/add'} className="mr-q"><i className="fa fa-pencil-square-o"  aria-hidden="true"></i> </Link> 
+                    <Link to={'/clients/detail'} className="mr-q"><i className="fa fa-eye"  aria-hidden="true"></i> </Link>
                     <a href="#" onClick={this.handleClientRemove}><i className="fa fa-times" aria-hidden="true"></i></a>
                 </div>
             </td>

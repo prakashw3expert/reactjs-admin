@@ -31,8 +31,10 @@ const MyTextarea = React.createClass({
         <div className="col-md-9">
           <textarea
             name={this.props.name}
+            rows={this.props.rows ? this.props.rows : 5}
             onChange={this.changeValue}
-            className="form-control" rows="5"></textarea>
+            defaultValue={this.props.value}
+            className="form-control"></textarea>
           <span className='help-block text-danger'>{errorMessage}</span>
         </div>
       </div>

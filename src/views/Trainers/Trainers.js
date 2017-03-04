@@ -36,7 +36,7 @@ class Trainings extends Component {
     });
   }
 
-  
+
 
   render() {
     return (
@@ -56,7 +56,7 @@ class Trainings extends Component {
                       <th>Email Address</th>
                       <th>Mobile Number</th>
                       <th>Gym</th>
-                      <th className="text-center">Contract#</th>
+                      <th className="text-center">Traiinings#</th>
                       <th className="text-center">Registration Date</th>
                       <th className="text-center">Status</th>
                       <th>Action</th>
@@ -64,11 +64,11 @@ class Trainings extends Component {
                   </thead>
                   <tbody>
                   {(()=>{
-                      
+
                       this.clientList.forEach((item,index)=>{
                         this.resultSet.push(<Trainer item={item} />)
                            });
-                          return this.resultSet;     
+                          return this.resultSet;
                     })()}
                   </tbody>
                 </table>
@@ -97,7 +97,7 @@ function Trainer(props){
              <div>{props.item.phone}</div>
            </td>
            <td>
-             <div>{props.item.gym}</div>
+             <div>{props.item.gym} <div className="small text-muted"><span>BS4 5SS</span></div></div>
            </td>
            <td>
              <div className="text-center">10</div>

@@ -9,7 +9,7 @@ const MySelect = React.createClass({
   },
 
   render() {
-    const className = 'form-group' + (this.props.className || ' ') +
+    const className = 'form-group row' + (this.props.className || ' ') +
       (this.showRequired() ? 'required' : this.showError() ? 'error' : '');
     const errorMessage = this.getErrorMessage();
 
@@ -21,11 +21,13 @@ const MySelect = React.createClass({
 
     return (
       <div className={className}>
-        <label htmlFor={this.props.name}>{this.props.title}</label>
-        <select name={this.props.name} onChange={this.changeValue} value={this.getValue()}>
+        <label htmlFor={this.props.name} className="col-md-3 form-control-label text-right">{this.props.title}</label>
+        <div className="col-md-9">
+        <select name={this.props.name} onChange={this.changeValue} value={this.getValue()} className="form-control">
           {options}
         </select>
-        <span className='validation-error'>{errorMessage}</span>
+          <span className='help-block text-danger'>{errorMessage}</span>
+        </div>
       </div>
     );
   }

@@ -3,6 +3,7 @@
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
+var browserify = require(‘browserify’);
 
 gulp.task('sass', function () {
   return gulp.src('./scss/style.scss')
@@ -19,4 +20,4 @@ gulp.task('sass:watch', function () {
   gulp.watch('./scss/**/*.scss', ['sass']);
 });
 
-gulp.task('default', ['sass:watch']);
+gulp.task('default', ['sass:watch','browserify']);

@@ -32,6 +32,7 @@ const MyInput = React.createClass({
           <input
             type={this.props.type || 'text'}
             name={this.props.name}
+            placeholder={this.props.placeholder}
             onChange={this.changeValue}
             value={this.getValue() ? this.getValue() : ''}
             className="form-control"

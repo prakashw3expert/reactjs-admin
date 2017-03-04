@@ -2466,7 +2466,7 @@ tbody.collapse.show {
 
 .card-block .tab-content {
   margin-top: 0;
-  border: 0; }
+  border-top: 0; }
 
 .navbar {
   position: relative;
@@ -3682,7 +3682,8 @@ button.close {
 
 .modal-title {
   margin-bottom: 0;
-  line-height: 1.5; }
+  /*line-height: 1.5; */
+}
 
 .modal-body {
   position: relative;
@@ -7920,7 +7921,19 @@ hr.transparent {
   width: 36px; }
   .avatar .img-avatar {
     width: 36px;
-    height: 36px; }
+    height: 36px;
+  }
+
+  .avatar .img-avatar.sm {
+      width: 20px;
+      height: 20px;
+  }
+
+  .avatar .img-avatar.md {
+      width: 50px;
+      height: 50px;
+  }
+
   .avatar .avatar-status {
     position: absolute;
     right: 0;
@@ -8667,4 +8680,7 @@ base-chart.chart {
 }
 .react-alerts .alert .content{
   text-align: left !important;
+}
+.video_image{
+  width: 120px;
 }
