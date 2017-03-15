@@ -1,52 +1,73 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import 'whatwg-fetch'
+
+
+import * as Loopback from '../../actions/Loopback'
 
 import { Form } from 'formsy-react';
 import FormInput from '../../components/Input';
+import InputSimple from '../../components/InputSimple';
 import FormSwitch from '../../components/Switch';
+
+import Pagination from "react-js-pagination";
 
 class Categories extends Component {
 
   constructor(props) {
     super(props);
-
     this.toggle = this.toggle.bind(this);
-
     this.state = {
       modal: false,
       dropdownOpen: false,
-      categories : [
-          {"id":"436000001","name":"Power Yoga","trainers":"10","contracts":"10","created":"18/02/2017","statusText":"Active"},
-          {"id":"436000002","name":"Aerobic","trainers":"10","contracts":"10","created":"18/02/2017","statusText":"Active"},
-          {"id":"436000003","name":"Cycling","trainers":"10","contracts":"10","created":"18/02/2017","statusText":"Active"},
-          {"id":"436000004","name":"Running","trainers":"10","contracts":"10","created":"18/02/2017","statusText":"Active"},
-          {"id":"436000005","name":"Climbing","trainers":"10","contracts":"10","created":"18/02/2017","statusText":"Active"},
-          {"id":"436000006","name":"Jumping","trainers":"10","contracts":"10","created":"18/02/2017","statusText":"Active"},
-          {"id":"436000007","name":"Climbing","trainers":"10","contracts":"10","created":"18/02/2017","statusText":"Active"},
-      ]
+      LoopBack : {
+        offset : 0,
+        limit : 100
+      },
+      activePage : 1,
+      totolRecords : 1
     };
+  }
 
-    //this.toggleAdd = this.toggle.bind(this);
+  componentWillMount(){
+    // Get total counts
+    var options = this.state.LoopBack;
+    this.categories(options);
+  }
+
+  categories(filter){
+    Loopback.load('categories/count').then((data) => {
+      this.setState({'totolRecords': data.count});
+    })
+
+    Loopback.load('categories',filter).then((data) => {
+      this.setState({'categories': data});
+    })
   }
 
 
-
-
+  submit(data){
+    var options = this.state.LoopBack;
+    options['where'] = '';
+    if(data.name){
+        options['where']  = {name: {like: data.name}};
+    }
+    this.categories(options);
+  }
   toggle() {
     this.setState({
       modal: !this.state.modal
     });
   }
 
-
+  handlePageChange(pageNumber) {
+    var options = this.state.LoopBack;
+    options['offset'] = ((pageNumber - 1) * options['limit']);
+    this.categories(options);
+    this.setState({activePage: pageNumber});
+  }
 
   render() {
-    var avaibility = [];
-      var that = this;
-    this.state.categories.forEach(function(sche, key) {
-      avaibility.push(<ListSchedule data={sche}  onCategoryEdit={that.toggle} key={key}/> );
-    });
-
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -57,6 +78,19 @@ class Categories extends Component {
                 <Button  onClick={this.toggle} type="button" className="btn btn-outline-primary btn-sm pull-right"><i className="fa fa-plus"></i> Add New Category </Button>
               </div>
               <div className="card-block">
+
+              <div className="form-group row">
+                <div className="col-9">
+
+                </div>
+                <div className="col-3">
+                  <Form onSubmit={this.submit.bind(this)}>
+                  <InputSimple name="name" placeholder="Search"  />
+
+                  </Form>
+                </div>
+              </div>
+
                 <table className="table table-hover table-outline mb-0 hidden-sm-down">
                   <thead className="thead-default">
                     <tr>
@@ -68,9 +102,20 @@ class Categories extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                  {avaibility}
+                  {this.state.categories ? this.state.categories.map(catetory => (
+                      <Category data={catetory}  onCategoryEdit={this.toggle} key={catetory.id.toString()} />
+                  )) : ""}
                   </tbody>
                 </table>
+
+                <div className="row mt-1">
+                  <div className="col-12">
+                      <Pagination activePage={this.state.activePage} itemsCountPerPage={this.state.LoopBack.limit} totalItemsCount={this.state.totolRecords} pageRangeDisplayed={5} onChange={this.handlePageChange.bind(this)} />
+                  </div>
+                </div>
+
+
+
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                   <ModalHeader toggle={this.toggle}>Add Category</ModalHeader>
                   <ModalBody>
@@ -94,7 +139,7 @@ class Categories extends Component {
   }
 }
 
-var ListSchedule = React.createClass({
+var Category = React.createClass({
     handleCategoryEdit: function() {
       this.props.onCategoryEdit( this.props.data );
       return false;
@@ -117,7 +162,7 @@ var ListSchedule = React.createClass({
           </td>
 
           <td>
-            Active
+            {this.props.data.status === true ? "Active" : "Deactived"}
           </td>
           <td>
           <div>
@@ -130,5 +175,6 @@ var ListSchedule = React.createClass({
         );
     }
 });
+
 
 export default Categories;

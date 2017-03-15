@@ -118,7 +118,6 @@ function generateData(count) {
   var dataProvider = [];
 
   for (var i = 0; i < count; ++i) {
-    console.log(firstDate);
     var date = new Date(firstDate.getTime());
 
     date.setDate(i);
@@ -167,7 +166,7 @@ var Chart = React.createClass({
       "path": "amcharts3/amcharts",
       "type": "serial",
       "theme": "light",
-      'height' : '500',
+      'height' : '500px',
       "marginTop": 10,
       "marginRight": 15,
       "marginLeft": 40,
@@ -293,7 +292,7 @@ var Sessions = React.createClass({
       "path": "amcharts3/amcharts",
       "type": "serial",
       "theme": "light",
-      'height' : '500',
+      'height' : '500px',
       "marginTop": 10,
       "marginRight": 15,
       "marginLeft": 40,
