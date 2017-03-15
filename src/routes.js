@@ -8,10 +8,9 @@ import reducer from './reducers'
 import rootSaga from './sagas'
 //import {initDone} from './actions'
 
-import * as App from './actions'
+// import * as App from './actions'
 
-import { config } from 'react-loopback';
-config.set('baseUrl', 'http://localhost:3001/api/v1/');
+
 
 import Full from './containers/Full/'
 import Simple from './containers/Simple/'
@@ -45,7 +44,6 @@ import Privacy from './views/Pages/Privacy'
 
 let logger = createLogger({
   // Ignore `CHANGE_FORM` actions in the logger, since they fire after every keystroke
-  predicate: (getState, action) => action.type !== 'CHANGE_FORM'
 })
 
 let sagaMiddleware = createSagaMiddleware()
@@ -53,9 +51,6 @@ let sagaMiddleware = createSagaMiddleware()
 let store = createStore(reducer, applyMiddleware(logger, sagaMiddleware))
 // We run the root saga automatically
 sagaMiddleware.run(rootSaga)
-
-
-
 
 /**
 * Checks authentication status on route change
@@ -65,7 +60,7 @@ sagaMiddleware.run(rootSaga)
 function checkAuth (nextState, replace) {
   let {loggedIn} = store.getState()
 //console.log(AppActions);
-  store.dispatch(App.initDone())
+  store.dispatch({ type: 'APP_INIT_DONE' })
 
   // Check if the path isn't dashboard. That way we can apply specific logic to
   // display/render the path we want to

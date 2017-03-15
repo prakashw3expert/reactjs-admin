@@ -18,7 +18,6 @@ export function load(endpoint, options) {
     url += '?filter=' + encodeURIComponent(JSON.stringify(options));
   }
 
-  console.log(options);
       return fetch(url)
         .then((response) => response.json())
         .then((responseJson) => {
