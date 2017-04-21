@@ -1,6 +1,4 @@
-import {
-    User as UserActions,
-} from '../actions'
+import * as UserActions from '../actions/User'
 
 /**
  * initialState
@@ -44,9 +42,13 @@ function User(state = initialState, action) {
         case UserActions.LOGOUT:
             return Object.assign({}, state, initialState)
 
+
+      default:
+        return state
+
     }
 
-    return state
+
 }
 
 export default User

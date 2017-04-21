@@ -1,12 +1,17 @@
-import {
-    App as AppActions,
-} from '../actions'
-
-/**
- * initialState
- * @type {{loading: boolean}}
+/*
+ * The reducer takes care of state changes in our app through actions
  */
-const initialState = { loading: true, }
+
+import * as AppAction from '../actions/App'
+
+
+
+import auth from '../auth'
+
+// The initial application state
+let initialState = {
+  loggedIn: auth.loggedIn()
+}
 
 /**
  * App
@@ -17,15 +22,16 @@ const initialState = { loading: true, }
  * @returns {*}
  * @constructor
  */
-function App(state = initialState, action) {
+function App (state = initialState, action) {
 
-    switch (action.type) {
+  switch (action.type) {
+    case AppAction.INIT_DONE:
+      return {...state, loggedIn: false}
 
-        case AppActions.INIT_DONE:
-            return Object.assign({}, state, { loading: false, })
-    }
 
-    return state
+    default:
+      return state
+  }
 }
 
 export default App

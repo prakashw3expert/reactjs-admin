@@ -1,5 +1,3 @@
-// import config from 'config'
-
 /**
  * FB_LOGIN
  * @type {string}

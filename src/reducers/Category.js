@@ -1,23 +1,17 @@
-import {
-    Cateory as CategoryActions,
-} from '../actions'
+import * as CategoryActions from '../actions/Category'
 
 /**
  * initialState
  * @type {{id: string, caption: string, created_at: string, email: string, fb_uid: string, filename: string, first_name: string, hashtags: string, last_name: string, latitude: string, liked: string, location: string, longitude: string, modified_at: string, user_id: string, loading: boolean}}
  */
 const initialState = {
-    id: '',
-    name: '',
-    status: '',
-    created: '',
-    modified: '',
-    loading: false,
+    data: [],
+    totalRecords : 119
 }
 
 /**
- * Photo
- * Redux Reducer for Photo action
+ * Category
+ * Redux Reducer for Category action
  * Reference: http://redux.js.org/docs/basics/Reducers.html
  * @param state
  * @param action
@@ -29,21 +23,33 @@ function Category(state = initialState, action) {
     switch (action.type) {
         case CategoryActions.LOAD:
             if (action.response) {
-                const res = action.response
-                return Object.assign({}, state, {
-                    id: res.id,
-                    name: res.name,
-                    status: res.status,
-                    created: res.created,
-                    modified: res.modified,
 
-                })
+              return Object.assign({}, state, {
+                  data: action.response
+              })
+
+                // return [
+                //     ...action.response,
+                // ]
             }
+            return [];
 
-            return Object.assign({}, state, { loading: true })
+          case CategoryActions.COUNT:
+              if (action.response) {
+                return Object.assign({}, state, {
+                    totalRecords: action.response.count
+                })
+
+                // const s = [...state]
+                // s.count = action.response.count;
+                // return s
+              }
+              break;
+
+            default:
+              return state
     }
 
-    return state
 }
 
 export default Category

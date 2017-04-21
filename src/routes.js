@@ -2,14 +2,10 @@ import React from 'react';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import {createStore, applyMiddleware} from 'redux'
 import createSagaMiddleware from 'redux-saga';
-import {Provider} from 'react-redux';
+
 import createLogger from 'redux-logger';
 import reducer from './reducers'
 import rootSaga from './sagas'
-//import {initDone} from './actions'
-
-// import * as App from './actions'
-
 
 
 import Full from './containers/Full/'
@@ -60,7 +56,6 @@ sagaMiddleware.run(rootSaga)
 function checkAuth (nextState, replace) {
   let {loggedIn} = store.getState()
 //console.log(AppActions);
-  store.dispatch({ type: 'APP_INIT_DONE' })
 
   // Check if the path isn't dashboard. That way we can apply specific logic to
   // display/render the path we want to
@@ -89,7 +84,6 @@ function checkAuth (nextState, replace) {
 }
 
 export default (
-  <Provider store={store}>
     <Router history={hashHistory}>
       <Route path="/" name="Dashboard" component={Full} onEnter={checkAuth}>
         <IndexRoute component={Dashboard}  />
@@ -124,5 +118,5 @@ export default (
         <Route path="500" name="Page 500" component={Page500}/>
       </Route>
     </Router>
-  </Provider>
+
 );
