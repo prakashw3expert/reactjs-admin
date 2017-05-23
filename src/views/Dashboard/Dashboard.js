@@ -166,7 +166,7 @@ var Chart = React.createClass({
       "path": "amcharts3/amcharts",
       "type": "serial",
       "theme": "light",
-      'height' : '500px',
+      'height' : 500,
       "marginTop": 10,
       "marginRight": 15,
       "marginLeft": 40,
@@ -270,7 +270,6 @@ var Sessions = React.createClass({
 
   componentDidMount: function () {
     var self = this;
-
     self.setState({
       // Update the chart dataProvider every 3 seconds
       // timer: setInterval(function () {
@@ -292,7 +291,7 @@ var Sessions = React.createClass({
       "path": "amcharts3/amcharts",
       "type": "serial",
       "theme": "light",
-      'height' : '500px',
+      'height' : 500,
       "marginTop": 10,
       "marginRight": 15,
       "marginLeft": 40,

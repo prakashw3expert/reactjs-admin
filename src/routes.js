@@ -30,9 +30,9 @@ import AddArticle from './views/Article/Add/'
 
 
 import Login from './views/Pages/Login/'
-import Register from './views/Pages/Register/'
-import Page404 from './views/Pages/Page404/'
-import Page500 from './views/Pages/Page500/'
+// import Register from './views/Pages/Register/'
+// import Page404 from './views/Pages/Page404/'
+// import Page500 from './views/Pages/Page500/'
 
 import About from './views/Pages/About'
 import TermConditions from './views/Pages/TermConditions'
@@ -44,9 +44,20 @@ let logger = createLogger({
 
 let sagaMiddleware = createSagaMiddleware()
 
-let store = createStore(reducer, applyMiddleware(logger, sagaMiddleware))
+createStore(reducer, applyMiddleware(logger, sagaMiddleware))
 // We run the root saga automatically
 sagaMiddleware.run(rootSaga)
+
+let localStorage
+
+// If we're testing, use a local storage polyfill
+if (global.process && process.env.NODE_ENV === 'test') {
+  localStorage = require('localStorage')
+} else {
+  // If not, use the browser one
+  localStorage = global.window.localStorage
+}
+
 
 /**
 * Checks authentication status on route change
@@ -54,30 +65,31 @@ sagaMiddleware.run(rootSaga)
 * @param  {function} replace Function provided by React Router to replace the location
 */
 function checkAuth (nextState, replace) {
-  let {loggedIn} = store.getState()
-//console.log(AppActions);
+  //let {loggedIn} = store.getState()
+  let loggedIn = localStorage.ptspotter_accessToken
+
 
   // Check if the path isn't dashboard. That way we can apply specific logic to
   // display/render the path we want to
-  if (nextState.location.pathname !== '/dashboard' && nextState.location.pathname !== '/pages/login') {
+  if (nextState.location.pathname !== '/dashboard' && nextState.location.pathname !== '/auth/login') {
     if (loggedIn) {
       if (nextState.location.state && nextState.location.pathname) {
         replace(nextState.location.pathname)
       } else {
-        //replace('/pages/login')
+        //replace('/auth/login')
       }
     }
     else{
-      //replace('/pages/login')
+      replace('/auth/login')
     }
   } else {
 
     // If the user is already logged in, forward them to the homepage
-    if (!loggedIn && nextState.location.pathname !== '/pages/login') {
+    if (!loggedIn && nextState.location.pathname !== '/auth/login') {
       if (nextState.location.state && nextState.location.pathname) {
         replace(nextState.location.pathname)
       } else {
-        //replace('/pages/login')
+        replace('/auth/login')
       }
     }
   }
@@ -86,12 +98,12 @@ function checkAuth (nextState, replace) {
 export default (
     <Router history={hashHistory}>
       <Route path="/" name="Dashboard" component={Full} onEnter={checkAuth}>
-        <IndexRoute component={Dashboard}  />
+        // <IndexRoute component={Dashboard}  />
         <Route path="dashboard" name="Dashboard" component={Dashboard}/>
         <Route path="clients" name="Clients">
           <IndexRoute component={Clients}/>
           <Route path="add" name="Add Client" component={AddClient}/>
-          <Route path="detail" name="View" component={ViewClient}/>
+          <Route path="detail/:clientId" name="View" component={ViewClient}/>
         </Route>
         <Route path="trainers" name="Trainers">
           <IndexRoute component={Trainers}/>
@@ -110,12 +122,9 @@ export default (
         <Route path="pages/term-conditions" name="Term & Conditions" component={TermConditions}/>
         <Route path="pages/privacy" name="Privacy Policy" component={Privacy}/>
       </Route>
-      <Route path="pages/" name="Pages" component={Simple}>
-        <IndexRoute component={Page404}/>
-        <Route path="login" name="Login Page" component={Login}/>
-        <Route path="register" name="Register Page" component={Register}/>
-        <Route path="404" name="Page 404" component={Page404}/>
-        <Route path="500" name="Page 500" component={Page500}/>
+      <Route path="auth/" name="Auth" component={Simple}>
+        <IndexRoute component={Login}/>
+        <Route path="login" name="Login" component={Login}/>
       </Route>
     </Router>
 

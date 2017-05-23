@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-//import { hashHistory } from 'react-router';
+// import { hashHistory } from 'react-router';
 import { Form } from 'formsy-react';
 
 import Input from '../../../components/InputLogin';
 
+import { connect } from 'react-redux'
+
+import {login} from '../../../actions'
 
 
-import AlertContainer from 'react-alert';
+// import AlertContainer from 'react-alert';
 
 class Login extends Component {
   constructor(props){
@@ -23,15 +26,7 @@ class Login extends Component {
 
   submit(data) {
     console.log(data);
-    alert(JSON.stringify(data, null, 4));
-     this.msg.show('Client has been updated successfully', {
-      type: 'success',
-      time: 3000,
-    });
-
-     setTimeout(function() {
-      //hashHistory.push('/clients');
-    }, 3000);
+    this.props.login(data);
 
   }
 
@@ -62,7 +57,6 @@ class Login extends Component {
                     <div className="row">
                       <div className="col-6">
                         <button type="submit" className="btn btn-primary px-2" disabled={!this.state.canSubmit}>Login</button>
-                        <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
                       </div>
                     </div>
                   </Form>
@@ -76,4 +70,10 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const ConnectedApp = connect((state) => {
+  return {
+    state: state,
+  }
+},{login})(Login)
+
+export default ConnectedApp

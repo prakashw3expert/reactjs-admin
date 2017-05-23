@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+
 import AlertContainer from 'react-alert';
+
+import { connect } from 'react-redux'
+import AppConfig from  "../../../Config/AppConfig"
+import * as axios from 'axios'
+import Moment from 'react-moment';
+let localStorage = require('localStorage')
 
 
 class Clients extends Component {
@@ -10,22 +17,8 @@ class Clients extends Component {
         this.toggle = this.toggle.bind(this);
         this.state = {
             dropdownOpen: false,
-            clientList : [
-                {"id":"436000001","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"436000002","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"436000003","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"436000004","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"436000005","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"436000006","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"436000007","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"436000008","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"436000009","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"4360000010","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"4360000011","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"4360000012","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"4360000013","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"4360000014","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-            ]
+            clientList : []
+
         };
 
         this.alertOptions = {
@@ -37,6 +30,20 @@ class Clients extends Component {
         };
 
     }
+
+    componentDidMount () {
+      axios.get(AppConfig.ApiUrl + "users?access_token="+localStorage.ptspotter_accessToken + '&filter[where][role]=client')
+      .then(res => {
+          this.setState({clientList : res.data})
+
+      })
+      .catch(function (error) {
+          console.log('Loading Failed');
+      });
+
+    }
+
+
 
     toggle() {
         this.setState({
@@ -57,11 +64,22 @@ class Clients extends Component {
             this.state.clientList.splice( index, 1 );
             this.setState( {clientList: this.state.clientList} );
 
-            this.msg.show(client.name + ' has been deleted successfully', {
-              type: 'success',
-              time: 3000,
+            axios.delete(AppConfig.ApiUrl + "users/" + client.id + "?access_token="+localStorage.ptspotter_accessToken)
+            .then(res => {
+                if(res.data.count){
+                  this.msg.show(client.name + ' has been deleted successfully', {
+                    type: 'success',
+                    time: 3000,
+                  });
+                }
+
+            })
+            .catch(function (error) {
+                console.log('Loading Failed');
             });
+
         }
+        return false;
     }
 
 
@@ -82,12 +100,7 @@ class Clients extends Component {
                                     <input type="text" className="form-control" placeholder="Name, email and phone"/>
                                   </div>
                                   <div className="col-3">
-                                    <input type="text" className="form-control"  placeholder="City & Postal code"/>
-                                  </div>
-                                  <div className="col-3">
-                                    <select className="form-control">
-                                      <option>Country</option>
-                                    </select>
+                                    <input type="text" className="form-control"  placeholder="Addrress"/>
                                   </div>
                                   <div className="col-3">
                                     <select className="form-control">
@@ -96,9 +109,7 @@ class Clients extends Component {
                                       <option>Inactive</option>
                                     </select>
                                   </div>
-                                </div>
 
-                                <div className="form-group row">
                                   <div className="col-3">
                                     <select className="form-control">
                                       <option>Category</option>
@@ -107,7 +118,12 @@ class Clients extends Component {
                                     </select>
                                   </div>
 
-                                  <div className="col-3">
+                                </div>
+
+                                <div className="form-group row">
+
+
+                                  <div className="col-6">
                                     <input type="text" className="form-control"  placeholder="Registered Date"/>
                                   </div>
 
@@ -137,13 +153,12 @@ var ClintList = React.createClass({
       var companies = [];
           var that = this;
           this.props.clist.forEach(function(client, key) {
-            companies.push(<Client client={client} onClientDelete={that.handleClientRemove}  key={key}/> );
+            companies.push(<Client client={client} onClientDelete={() => that.handleClientRemove(client)}  key={key}/> );
         });
           return (
             <table className="table table-hover table-outline mb-0 hidden-sm-down">
                 <thead className="thead-default">
                     <tr>
-                        <th>Client ID</th>
                         <th>Client List</th>
                         <th>Email Address</th>
                         <th>Mobile Number</th>
@@ -171,9 +186,7 @@ var Client = React.createClass({
     render: function() {
       return (
         <tr>
-            <td>
-                <div>{this.props.client.id}</div>
-            </td>
+
             <td>
                 <div>{this.props.client.name}</div>
             </td>
@@ -184,21 +197,25 @@ var Client = React.createClass({
                 <div>{this.props.client.phone}</div>
             </td>
             <td>
-                <div>{this.props.client.location}</div>
+                <div>{this.props.client.address}</div>
             </td>
             <td className="text-center">
-                302013
+                {this.props.client.postal_code}
             </td>
             <td className="text-center">
-                <div>{this.props.client.created}</div>
+                <Moment format="DD/MM/YYYY">{this.props.client.createdAt}</Moment>
+
             </td>
             <td className="text-center">
-                <div className="text-success"><strong>{this.props.client.status}</strong></div>
+                <div className={(this.props.client.status) ? "text-success" : "text-danger"}><strong>{(this.props.client.status) ? 'Active' : 'Inactive'}</strong></div>
             </td>
             <td>
                 <div className="text-center">
-                    <Link to={'/clients/detail'} className="mr-q"><i className="fa fa-eye"  aria-hidden="true"></i> </Link>
-                    <a href="#" onClick={this.handleClientRemove}><i className="fa fa-times" aria-hidden="true"></i></a>
+
+                    <Link to={{pathname: `/clients/detail/${this.props.client.id}`, state: { client: this.props.client }}} className="mr-q">
+                      <i className="fa fa-eye"  aria-hidden="true"></i>
+                    </Link>
+                    <a href="javasript:void(0)" onClick={this.handleClientRemove}><i className="fa fa-times" aria-hidden="true"></i></a>
                 </div>
             </td>
         </tr>
@@ -206,5 +223,10 @@ var Client = React.createClass({
     }
 });
 
+const ConnectedApp = connect((state) => {
+  return {
+    state: state
+  }
+})(Clients)
 
-export default Clients;
+export default ConnectedApp

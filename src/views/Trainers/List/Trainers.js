@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import AlertContainer from 'react-alert';
-
+import * as axios from 'axios'
+import Moment from 'react-moment';
+import AppConfig from  "../../../Config/AppConfig"
+let localStorage = require('localStorage')
 
 class Trainers extends Component {
 
@@ -10,22 +13,7 @@ class Trainers extends Component {
         this.toggle = this.toggle.bind(this);
         this.state = {
             dropdownOpen: false,
-            clientList : [
-                {"id":"436000001","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"436000002","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"436000003","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"436000004","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"436000005","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"436000006","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"436000007","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"436000008","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"436000009","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"4360000010","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"4360000011","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"4360000012","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"4360000013","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-                {"id":"4360000014","facebook_id":"43681725294524345","type":"user","name":"Brandom Bell","email":"brandom@ptspotter.co.uk","phone":"+447777777777","traning_area":"10","workout":["Item1","Item2","Item3","Item4"],"goals":[{"name":"Power Yoga","time":"10","count":"5"},{"name":"Aerobic","time":"20","count":"10"}],"location":"Kilmarnock KA1 5LQ, UK","lat":"55.547145","lng":"-4.7514894","profile_status":1,"appointment_notification":1,"geolocation":1,"created":"18/02/2017","modified":"2017-20-02 14:24:00","status":"Active"},
-            ]
+            clientList : []
         };
 
         this.alertOptions = {
@@ -35,6 +23,18 @@ class Trainers extends Component {
           time: 0,
           transition: 'scale'
         };
+
+    }
+
+    componentDidMount () {
+      axios.get(AppConfig.ApiUrl + "users?access_token="+localStorage.ptspotter_accessToken + '&filter[where][role]=trainer')
+      .then(res => {
+          this.setState({clientList : res.data})
+
+      })
+      .catch(function (error) {
+          console.log('Loading Failed');
+      });
 
     }
 
@@ -143,7 +143,6 @@ var ClintList = React.createClass({
             <table className="table table-hover table-outline mb-0 hidden-sm-down">
                 <thead className="thead-default">
                     <tr>
-                        <th>PT ID</th>
                         <th>PT Name</th>
                         <th>Email Address</th>
                         <th>Mobile Number</th>
@@ -172,9 +171,6 @@ var Client = React.createClass({
       return (
         <tr>
             <td>
-                <div>{this.props.client.id}</div>
-            </td>
-            <td>
                 <div>{this.props.client.name}</div>
             </td>
             <td>
@@ -193,10 +189,10 @@ var Client = React.createClass({
                 2
             </td>
             <td className="text-center">
-                <div>{this.props.client.created}</div>
+                <Moment format="DD/MM/YYYY">{this.props.client.created}</Moment>
             </td>
             <td className="text-center">
-                <div className="text-success"><strong>{this.props.client.status}</strong></div>
+                <div className={(this.props.client.status) ? "text-success" : "text-danger"}><strong>{(this.props.client.status) ? 'Active' : 'Inactive'}</strong></div>
             </td>
             <td>
                 <div className="text-center">

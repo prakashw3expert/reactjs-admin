@@ -8,7 +8,7 @@ import TimeAgo from 'react-timeago'
 
 import { Form } from 'formsy-react';
 import FormInput from '../../components/Input';
-import InputSimple from '../../components/InputSimple';
+
 import FormSwitch from '../../components/Switch';
 
 import Pagination from "react-js-pagination";
@@ -113,13 +113,11 @@ class Categories extends Component {
                   )) : ""}
                   </tbody>
                 </table>
-
-                <div className="row mt-1">
+                {(totolRecords > this.state.LoopBack.limit) ? <div className="row mt-1">
                   <div className="col-12">
                       <Pagination activePage={this.state.activePage} itemsCountPerPage={this.state.LoopBack.limit} totalItemsCount={totolRecords} pageRangeDisplayed={5} onChange={this.handlePageChange.bind(this)} />
                   </div>
-                </div>
-
+                </div> : null}
 
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>

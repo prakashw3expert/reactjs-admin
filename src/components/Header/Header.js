@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Dropdown, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Link } from 'react-router';
+import { connect } from 'react-redux'
+
+import {logout} from '../../actions'
 
 class Header extends Component {
 
@@ -13,10 +16,14 @@ class Header extends Component {
     };
   }
 
+  componentDidMount(){
+
+  }
   toggle() {
     this.setState({
       dropdownOpen: !this.state.dropdownOpen
     });
+    return false;
   }
 
   sidebarToggle(e) {
@@ -60,8 +67,8 @@ class Header extends Component {
           <li className="nav-item">
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
 
-              <a onClick={this.toggle} className="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded={this.state.dropdownOpen}>
-                <span className="hidden-md-down">Welocme Admin</span>
+              <a href="javasript:void(0)" onClick={this.toggle} className="nav-link dropdown-toggle nav-link" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded={this.state.dropdownOpen}>
+                <span className="hidden-md-down">Welocme {this.props.state.User.name}</span>
               </a>
 
               <DropdownMenu className="dropdown-menu-right">
@@ -70,7 +77,9 @@ class Header extends Component {
               <DropdownItem><i className="fa fa-user"></i> Profile</DropdownItem>
 
                 <DropdownItem><i className="fa fa-key"></i> Change Password</DropdownItem>*/}
-                <DropdownItem><Link to={'/pages/login'} className=""><i className="fa fa-lock"></i> Logout </Link></DropdownItem>
+                <DropdownItem>
+                <Link onClick={this.props.logout}  className=""><i className="fa fa-lock"></i> Logout </Link><
+                /DropdownItem>
 
               </DropdownMenu>
             </Dropdown>
@@ -84,4 +93,10 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const ConnectedApp = connect((state) => {
+  return {
+    state: state
+  }
+}, {logout})(Header)
+
+export default ConnectedApp

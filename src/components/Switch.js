@@ -30,7 +30,7 @@ const MySwitch = React.createClass({
         <label htmlFor={this.props.name} className="col-md-3 form-control-label text-right">{this.props.title}</label>
         <div className="col-md-9">
           <label className="switch switch-3d switch-primary">
-          <input type="checkbox" id="{props.name}" name={this.props.name}  className="switch-input" defaultChecked onChange={ this.changeValue }/>
+          <input type="checkbox" id="{props.name}" name={this.props.name}  className="switch-input" defaultChecked={this.props.value} onChange={ this.changeValue }/>
           <span className="switch-label"></span>
           <span className="switch-handle"></span>
           </label>

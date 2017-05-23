@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-
+import * as axios from 'axios'
+import Moment from 'react-moment';
+import AppConfig from  "../../../Config/AppConfig"
+let localStorage = require('localStorage')
 
 
 
@@ -11,15 +14,31 @@ class Details extends Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
         activeTab: "1",
-        Sessions : [
-            {"id":"136363631","client":{"name" : 'Ernest Wood','location' : "Bristol, BS4 5SS, UK","image" : "/img/avatars/1.jpg"},"pt":{"name" : 'Ernest Wood','gym' : "Block Londom Gym","image" : "/img/avatars/3.jpg"},"start_date" : "13 Feb 2017","time" : "09:00 AM","status" : "Pending"},
-            {"id":"136363632","client":{"name" : 'Garrett West','location' : "Bristol, BS4 5SS, UK","image" : "/img/avatars/2.jpg"},"pt":{"name" : 'Mitchell Sandoval','gym' : "Globle Londom Gym","image" : "/img/avatars/4.jpg"},"start_date" : "14 Feb 2017","time" : "09:00 AM","status" : "Active"},
-            {"id":"136363633","client":{"name" : 'Garrett West','location' : "Bristol, BS4 5SS, UK","image" : "/img/avatars/2.jpg"},"pt":{"name" : 'Mitchell Sandoval','gym' : "Globle Londom Gym","image" : "/img/avatars/4.jpg"},"start_date" : "15 Feb 2017","time" : "09:00 AM","status" : "Active"},
-            {"id":"136363634","client":{"name" : 'Ernest Wood','location' : "Bristol, BS4 5SS, UK","image" : "/img/avatars/1.jpg"},"pt":{"name" : 'Ernest Wood','gym' : "Block Londom Gym","image" : "/img/avatars/3.jpg"},"start_date" : "16 Feb 2017","time" : "09:00 AM","status" : "Pending"},
-            {"id":"136363635","client":{"name" : 'Garrett West','location' : "Bristol, BS4 5SS, UK","image" : "/img/avatars/2.jpg"},"pt":{"name" : 'Mitchell Sandoval','gym' : "Globle Londom Gym","image" : "/img/avatars/4.jpg"},"start_date" : "17 Feb 2017","time" : "09:00 AM","status" : "Active"},
-            {"id":"136363636","client":{"name" : 'Ernest Wood','location' : "Bristol, BS4 5SS, UK","image" : "/img/avatars/1.jpg"},"pt":{"name" : 'Ernest Wood','gym' : "Block Londom Gym","image" : "/img/avatars/3.jpg"},"start_date" : "19 Feb 2017","time" : "09:00 AM","status" : "Completed"},
-        ]
+        Sessions : []
     };
+  }
+
+  componentWillMount () {
+    var pathname = this.props.client;
+    pathname = pathname.split('/');
+    var clientId = pathname[3];
+
+    var filters = {
+      where  : {userId : clientId},
+      include: [
+        {relation: 'trainer', scope: { fields: ['name', 'image', "address", "id","gym"]}}
+      ]
+    }
+
+    filters = JSON.stringify(filters);
+
+    axios.get(AppConfig.ApiUrl + "sessions?access_token="+localStorage.ptspotter_accessToken + "&filter="+filters)
+    .then(res => {
+        console.log("res.data",res.data)
+        this.setState({Sessions : res.data})
+    })
+
+
   }
 
   toggle(tab) {
@@ -45,11 +64,10 @@ class Details extends Component {
             <th className="">Gym</th>
             <th className="">Date & Time</th>
             <th className="">Workouts</th>
-            <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          {avaibility}
+          {(this.state.Sessions.lenth) ? avaibility : <NoSessions />}
         </tbody>
       </table>
       );
@@ -59,37 +77,51 @@ class Details extends Component {
 
 var ListSchedule = React.createClass({
     render: function() {
+      var selectedWorkouts = [];
       return (
         <tr>
           <td className="text-left">{this.props.data.id}
           </td>
           <td className="text-left">
           <div className="avatar">
-            <img src={this.props.data.pt.image} className="img-avatar" alt="User"/>
+            <img src={(this.props.data.trainer.image) ? this.props.data.baseUrl + this.props.data.trainer.image : this.props.data.default_image} className="img-avatar" alt="User"/>
             <span className="avatar-status badge-success"></span>
           </div>
           </td>
           <td>
-            <div>{this.props.data.pt.name}</div>
-            <div className="small text-muted"><span>Bristl, BS4 5SS, UK</span></div>
+            <div>{this.props.data.trainer.name}</div>
+            <div className="small text-muted"><span>{this.props.data.trainer.address}</span></div>
           </td>
           <td>
-            <div>{this.props.data.pt.gym}</div>
-            <div className="small text-muted"><span>BS4 5SS</span></div>
+            <div>{this.props.data.gym.name}</div>
+            <div className="small text-muted"><span>{this.props.data.gym.postalcode}</span></div>
           </td>
           <td>
-            {this.props.data.start_date}
-            <div className="small text-muted"><span>{this.props.data.time}</span></div>
+            <Moment format="DD/MM/YYYY">{this.props.data.session_date}</Moment>
+            <div className="small text-muted">
+              <Moment format="HH:mm">{"2017-01-01 "+this.props.data.start_time}</Moment>
+            </div>
           </td>
           <td>
-            <span  className="btn btn-outline-primary btn-sm mr-sm-h">Yoga</span>
-            <span  className="btn btn-outline-primary btn-sm">Cardio</span>
-          </td>
-          <td>
-          {this.props.data.status}
+            {this.props.data.workouts.forEach(function(workout, key) {
+              selectedWorkouts.push(<span  className="btn btn-outline-primary btn-sm mr-sm-h" key={key}>{workout.name}</span> );
+            })}
+
+            {selectedWorkouts}
+
           </td>
         </tr>
 
+        );
+    }
+});
+
+var NoSessions = React.createClass({
+    render: function() {
+      return (
+        <tr>
+          <td className="text-center" colSpan={6}><h6>No session available for this client.</h6></td>
+        </tr>
         );
     }
 });

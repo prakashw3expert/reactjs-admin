@@ -1,6 +1,9 @@
 import * as axios from 'axios'
 
-export const baseUrl = 'http://localhost:3001/api/v1/'
+import AppConfig from  "../Config/AppConfig"
+
+
+
 
 /**
  * ADD
@@ -53,10 +56,10 @@ export function load(options) {
 
     return (dispatch, getState) => {
         dispatch(_loadRequest())
-        axios.get(baseUrl + "categories" + filter)
+        axios.get(AppConfig.ApiUrl + "categories" + filter)
         ///.then((response) => response.json())
         .then(res => {
-
+          console.log(res.data);
             dispatch(_loadResponse(res.data))
         })
     }
@@ -89,7 +92,7 @@ export function count(options) {
     var filter = (options && options['where']) ? '?where=' + encodeURIComponent(JSON.stringify(options['where'])) : '';
     return (dispatch, getState) => {
         dispatch(_loadRequest())
-        axios.get(baseUrl + "categories/count" + filter)
+        axios.get(AppConfig.ApiUrl + "categories/count" + filter)
         .then(res => {
             dispatch(_countResponse(res.data))
         })
